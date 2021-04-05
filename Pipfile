@@ -9,6 +9,8 @@ dj-rest-auth = {extras = ["with_social"], version = "*"}
 djangorestframework = "*"
 pymysql = "*"
 djangorestframework-simplejwt = "*"
+django-allauth = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

@@ -16,9 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
+from dj_rest_auth.views import PasswordResetConfirmView
 
 urlpatterns = [
+    path(
+        'auth/registration/account-confirm-email/<str:key>/',
+        ConfirmEmailView.as_view(),
+    ),
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('auth/', include('dj_rest_auth.urls')),
-    path('auth/registration/', include('dj_rest_auth.registration.urls'))
-
+    path('auth/password/reset/confirm/<slug:uidb64>/<slug:token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm')
 ]

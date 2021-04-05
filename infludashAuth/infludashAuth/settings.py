@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p7caraton2_9-f=)cgo-miwks)l4f2x4%o=fm0x#)kmu^#c!rp'
+SECRET_KEY = os.getenv('JWT_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -51,6 +55,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
+
+    'users'
 ]
 
 REST_FRAMEWORK = {
@@ -98,15 +104,15 @@ DATABASES = {
         # Django MySQL database engine driver class.
         'ENGINE': 'django.db.backends.mysql',
         # MySQL database host ip.
-        'HOST': '127.0.0.1',
+        'HOST': os.getenv('DB_HOST'),
         # port number.
-        'PORT': '3306',
+        'PORT': os.getenv('DB_PORT'),
         # database name.
-        'NAME': 'infludash',
+        'NAME': os.getenv('DB_NAME'),
         # user name.
-        'USER': 'root',
+        'USER': os.getenv('DB_USER'),
         # password
-        'PASSWORD': '',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
         # # connect options
         # 'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",},
     }
@@ -153,8 +159,34 @@ STATIC_URL = '/static/'
 
 # Optional settings
 SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
+REST_SESSION_LOGIN = False
 REST_USE_JWT = True
 
 JWT_AUTH_COOKIE = 'infludash-auth'
 JWT_AUTH_REFRESH_COOKIE = 'infludash-refresh-token'
+
+LOGOUT_ON_PASSWORD_CHANGE = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+
+LOGIN_URL = 'http://localhost:8000/auth/login'
+
+AUTHENTICATION_BACKENDS = (
+ # `allauth` specific authentication methods, such as login by e-mail
+ "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+# Turn on if production!
+# JWT_AUTH_SECURE = Tue 
