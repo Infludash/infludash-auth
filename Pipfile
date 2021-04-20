@@ -11,6 +11,7 @@ pymysql = "*"
 djangorestframework-simplejwt = "*"
 django-allauth = "*"
 python-dotenv = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
