@@ -179,6 +179,7 @@ JWT_AUTH_COOKIE = 'infludash-auth'
 JWT_AUTH_REFRESH_COOKIE = 'infludash-refresh-token'
 
 LOGOUT_ON_PASSWORD_CHANGE = True
+OLD_PASSWORD_FIELD_ENABLED = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -187,12 +188,18 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 
-LOGIN_URL = 'http://localhost:8000/auth/login'
+LOGIN_URL = os.getenv('LOGIN_URL')
+
 
 AUTHENTICATION_BACKENDS = (
  # `allauth` specific authentication methods, such as login by e-mail
  "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'infludashAuth.serializers.RegisterSerializer',
+}
+
 
 # Turn on if production!
 # JWT_AUTH_SECURE = Tue 
