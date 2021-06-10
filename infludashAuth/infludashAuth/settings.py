@@ -32,7 +32,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200'
+    'https://localhost:4200',
+    'https://localhost:44301',
 ]
 
 
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
-
     'users',
     'corsheaders'
 ]
@@ -86,7 +86,7 @@ ROOT_URLCONF = 'infludashAuth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'infludashAuth/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -192,14 +192,16 @@ LOGIN_URL = os.getenv('LOGIN_URL')
 
 
 AUTHENTICATION_BACKENDS = (
- # `allauth` specific authentication methods, such as login by e-mail
- "allauth.account.auth_backends.AuthenticationBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'infludashAuth.serializers.RegisterSerializer',
+    'REGISTER_SERIALIZER': 'infludashAuth.serializers.RegisterSerializer',
 }
 
 
 # Turn on if production!
-# JWT_AUTH_SECURE = Tue 
+# JWT_AUTH_SECURE = Tue
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
